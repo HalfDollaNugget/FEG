@@ -26,8 +26,11 @@ function returnLine(line: IFEGLineTemplate): IFEGLineTemplate {
   return line
 }
 
-class FEGLineGenerator {
-  
+class FEG {
+  schema: IFEGLinesSchema;
+  constructor(schema: IFEGLinesSchema) {
+    this.schema = schema;
+  }
 }
 //console.log(linesToString.value)
 </script>
