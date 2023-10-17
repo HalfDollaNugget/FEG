@@ -3,6 +3,8 @@ import IndexView from './views/IndexView.vue'
 </script>
 
 <template>
-  <IndexView />
+  <div class="flex h-screen w-screen bg-slate-800">
+    <IndexView />
+  </div>
   <!-- <RouterView /> -->
 </template>
