@@ -30,21 +30,60 @@ export interface IFEGLineTemplate {
 
 export class FEG {
   private readonly _schema: IFEGLinesSchema;
-  private _generatedLine: [];
+  private _generatedLines: Line;
   private _isInitialized: boolean;
   constructor(schema: IFEGLinesSchema) {
     this._schema = schema;
-    this._generatedLine = [];
+    this._generatedLines = {};
+    this._isInitialized = false;
   }
   public get schema() {
     return this._schema;
   }
+  private _stationFormat(data: number[]) {
+    for (const el of data) el <= 9 ? ``: ``;
+  }
   init() {
     if (this._isInitialized) return 'Already Initialized';
     else this._isInitialized = true;
-    this._schema.lines.forEach(line => {
-      let newLine = {}
-      newLine['name'] = line.name
+    this._schema.lines.forEach((line, lineIndex) => {
+      this._generatedLines[line.name] = {
+        stations: {
+          sides: {}
+        }
+      };
+      line.layout.amountPerSide.forEach((stationAmount, iAmount) => {
+        let sideName = iAmount == 0 ? 'left': 'right'
+        this._generatedLines[line.name].stations.sides[iAmount == 0 ? 'left': 'right'] = {}
+        if (stationAmount != 0) {
+          for (let index = 1; index <= stationAmount; index++) {
+            this._generatedLines[line.name].stations.sides[sideName][index] = {
+              name: `WS-CR-${lineIndex}-${index}`,
+              associate: {},
+              allowedRoles: [...line.layout.defaultRoles]
+            }
+          }
+        }
+      })
     })
+    return this._generatedLines
+  }
+}
+
+interface Line {
+  [x: string]: {
+    stations: {
+    sides: {
+      [x: string]: Station;
+    }
+  };
+  }
+}
+
+interface Station {
+  [x: number]: {
+    name: string;
+    associate?: {}; 
+    allowedRoles: string[];
   }
 }

@@ -27,7 +27,7 @@ function returnLine(line: IFEGLineTemplate): IFEGLineTemplate {
 }
 
 let test = new FEG(linesTemplate)
-console.log(test.schema)
+console.log(test.init())
 </script>
 
 <template>
