@@ -41,12 +41,13 @@ export class FEG {
     return this._schema;
   }
   private _stationFormat(data: any[]) {
-    /* let [line, id] = data
-    line = line <= 9 ? `0${line}`:`${line}` */
-    for (let el of data) {
+    let [line, id] = data
+    line = line <= 9 ? `0${line}`:`${line}`
+    id = id <= 9 ? `0${id}`:`${id}`
+    /*for (let el of data) {
       data[el] = el <= 9 ? `0${el}`: `${el}`
-    }
-    return `WS-CR-${data[0]}-${data[1]}`
+    }*/
+    return `WS-CR-${line}-${id}`
   }
   init() {
     if (this._isInitialized) return 'Already Initialized';
