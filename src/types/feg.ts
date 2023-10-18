@@ -40,8 +40,13 @@ export class FEG {
   public get schema() {
     return this._schema;
   }
-  private _stationFormat(data: number[]) {
-    for (const el of data) el <= 9 ? ``: ``;
+  private _stationFormat(data: any[]) {
+    /* let [line, id] = data
+    line = line <= 9 ? `0${line}`:`${line}` */
+    for (let el of data) {
+      data[el] = el <= 9 ? `0${el}`: `${el}`
+    }
+    return `WS-CR-${data[0]}-${data[1]}`
   }
   init() {
     if (this._isInitialized) return 'Already Initialized';
@@ -57,8 +62,9 @@ export class FEG {
         this._generatedLines[line.name].stations.sides[iAmount == 0 ? 'left': 'right'] = {}
         if (stationAmount != 0) {
           for (let index = 1; index <= stationAmount; index++) {
+            console.log(lineIndex, index)
             this._generatedLines[line.name].stations.sides[sideName][index] = {
-              name: `WS-CR-${lineIndex}-${index}`,
+              name: this._stationFormat([lineIndex, index]),
               associate: {},
               allowedRoles: [...line.layout.defaultRoles]
             }
