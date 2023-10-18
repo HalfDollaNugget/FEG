@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { Order, type IFEGLineTemplate, type IFEGLinesSchema } from '@/types/feg';
+import { FEG, Order, type IFEGLineTemplate, type IFEGLinesSchema } from '@/types/feg';
 const linesTemplate: IFEGLinesSchema = reactive({
   lines: [
     {
       name: "Line 1",
       order: Order.ASC,
       layout: {
-        stationNumber: 10,
-        sides: ["right"],
+        amountOfStations: 10,
+        amountPerSide: [2, 8],
         defaultRoles: ["Direct"],
         specials: {
           1: {
@@ -26,13 +26,8 @@ function returnLine(line: IFEGLineTemplate): IFEGLineTemplate {
   return line
 }
 
-class FEG {
-  schema: IFEGLinesSchema;
-  constructor(schema: IFEGLinesSchema) {
-    this.schema = schema;
-  }
-}
-//console.log(linesToString.value)
+let test = new FEG(linesTemplate)
+console.log(test.schema)
 </script>
 
 <template>
